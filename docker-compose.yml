@@ -1,0 +1,57 @@
+version: '3.7'
+services:
+  php_base:
+    container_name: php_base
+    build:
+      context: ./docker/php/base
+    image: php_base
+
+  sf_video_chat_api:
+    container_name: sf_video_chat_api
+    image: sf_video_chat_api
+    build:
+      context: ./docker/php/sf-video-chat-api
+      dockerfile: Dockerfile
+    volumes:
+      - ./sf-video-chat-api/:/var/www/html
+    depends_on:
+      - mariadb
+    ports:
+      - 8000:80
+
+  node_base:
+    container_name: node_base
+    build:
+        context: ./docker/node/base
+    image: node_base
+
+  nuxt_video_chat_front:
+    container_name: nuxt_video_chat_front
+    image: nuxt_video_chat_front
+    build:
+      context: ./docker/node/nuxt-video-chat-front
+      dockerfile: Dockerfile
+    volumes:
+      - ./nuxt-video-chat-front/:/home/node/nuxt-video-chat-front
+    ports:
+      - 5000:5000
+
+  mariadb:
+    container_name: sf_video_chat_mariadb
+    image: mariadb:10.7.3-focal
+    environment:
+      MARIADB_ROOT_PASSWORD: pass1234
+    volumes:
+      - mariadb-database:/var/lib/mysql:rw
+    ports:
+        - 3307:3306
+
+  adminer:
+      restart: always
+      container_name: sf_video_chat_adminer
+      image: adminer:4.8.1-standalone
+      ports:
+          - 9000:8080
+
+volumes:
+    mariadb-database:

@@ -1,0 +1,18 @@
+App\Core\UserAuth\Domain\Model\User:
+  type: entity
+  table: user
+  id:
+    id:
+      type: uuid
+      generator: { strategy: NONE }
+  fields:
+    email:
+      type: string
+      unique: true
+    username:
+      type: string
+      unique: true
+    roles:
+      type: json
+    password:
+      type: string
