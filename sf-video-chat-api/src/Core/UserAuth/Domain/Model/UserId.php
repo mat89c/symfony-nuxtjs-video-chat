@@ -8,8 +8,13 @@ class UserId
 {   
     public function __construct(private string $uuid) {}
 
-    public function uuid(): string
+    public function getUuid(): string
     {
         return $this->uuid;
     }
-}
+
+    public function __toString(): string
+    {
+        return $this->uuid;
+    }
+}   

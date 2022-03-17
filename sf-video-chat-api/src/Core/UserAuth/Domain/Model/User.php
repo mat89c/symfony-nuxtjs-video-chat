@@ -6,18 +6,28 @@ namespace App\Core\UserAuth\Domain\Model;
 
 class User
 {
-    private UserId $id;
-
-    private string $email;
-
-    private string $username;
-
-    private array $roles = [];
-
-    private string $password;
-
-    public function __construct(UserId $id)
+    public function __construct(
+        private UserId $id,
+        private string $email,
+        private string $username,
+        private array $roles,
+        private string $password
+    )
     {
         $this->id = $id;
+        $this->email = $email;
+        $this->username = $username;
+        $this->roles = $roles;
+        $this->password = password_hash($password, PASSWORD_ARGON2I);
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
     }
 }

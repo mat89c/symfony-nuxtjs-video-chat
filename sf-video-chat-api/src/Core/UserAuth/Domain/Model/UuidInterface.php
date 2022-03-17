@@ -6,5 +6,5 @@ namespace App\Core\UserAuth\Domain\Model;
 
 interface UuidInterface
 {
-    public static function generate(): string;
+    public function generate(): string; 
 }

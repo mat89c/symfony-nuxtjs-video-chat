@@ -1,0 +1,24 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        App\Shared\Application\CommandHandler\CommandHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+                
+    App\Shared\Infrastructure\EventListener\ExceptionEventListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+        
+    App\Core\UserAuth\Domain\Factory\UserUuidFactory:
+        public: true
+
+    App\Core\UserAuth\Infrastructure\Repository\DQL\UserRepository:
+        public: true
+
+    App\Core\UserAuth\Application\RegisterUser\CommandHandler\RegisterUserHandler:
+        public: true

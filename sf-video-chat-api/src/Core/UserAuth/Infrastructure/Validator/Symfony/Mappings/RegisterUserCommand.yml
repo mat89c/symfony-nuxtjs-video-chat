@@ -1,0 +1,32 @@
+App\Core\UserAuth\Application\RegisterUser\Command\RegisterUserCommand:
+    properties:
+        email:
+            - NotBlank:
+                message: email.required
+            - Email:
+                message: email.invalid
+            - Length:
+                max: 255
+                maxMessage: email.max_length_255
+            - App\Core\UserAuth\Infrastructure\Validator\Symfony\UniqueValueInEntity: 
+                message: email.unique
+                field: email
+        username:
+            - NotBlank:
+                message: username.required
+            - Length:
+                min: 2
+                minMessage: username.min_length_2
+                max: 255
+                maxMessage: username.max_length_255
+            - App\Core\UserAuth\Infrastructure\Validator\Symfony\UniqueValueInEntity: 
+                message: username.unique
+                field: username
+        password:
+            - NotBlank:
+                message: password.required
+            - Length:
+                min: 5
+                minMessage: password.min_length_5
+                max: 255
+                maxMessage: password.max_length_255

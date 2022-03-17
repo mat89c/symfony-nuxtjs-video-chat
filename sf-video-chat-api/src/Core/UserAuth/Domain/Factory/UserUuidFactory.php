@@ -13,6 +13,6 @@ class UserUuidFactory
 
     public function create(): UserId
     {
-        return new UserId($this->uuid->generate());
+        return new UserId(uuid: $this->uuid->generate());
     }
 }

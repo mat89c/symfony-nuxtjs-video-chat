@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Core\UserAuth\Infrastructure\UUID;
+namespace App\Shared\Infrastructure\Uuid\SymfonyUuid;
 
 use App\Core\UserAuth\Domain\Model\UuidInterface;
 use Symfony\Component\Uid\Uuid;
 
 class Uid implements UuidInterface
 {
-    public static function generate(): string
+    public function generate(): string
     {
-        return (string)Uuid::v4();
+        return Uuid::v4()->toBinary();
     }
 }

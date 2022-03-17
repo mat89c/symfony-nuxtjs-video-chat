@@ -4,7 +4,8 @@ App\Core\UserAuth\Domain\Model\User:
   id:
     id:
       type: uuid
-      generator: { strategy: NONE }
+      generator: 
+        strategy: NONE
   fields:
     email:
       type: string
