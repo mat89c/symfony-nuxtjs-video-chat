@@ -15,4 +15,9 @@ class UserUuidFactory
     {
         return new UserId(uuid: $this->uuid->generate());
     }
+
+    public function createFromString(string $uuid): UserId
+    {
+        return new UserId(uuid: $uuid);
+    }
 }

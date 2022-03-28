@@ -116,3 +116,6 @@ password:
   min_length_5: 'Hasło nie może być krótsze niż 5 znaków'
   max_length_255: 'Hasło nie może być dłuższe niż 255 znaków.'
 
+userId:
+  required: 'Wymagany id użytkownika.'
+  not_exists: 'Nie znaleziono użytkownika o podanym ID.'

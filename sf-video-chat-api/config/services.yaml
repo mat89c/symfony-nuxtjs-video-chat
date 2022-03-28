@@ -23,6 +23,10 @@ services:
         App\Shared\Application\CommandHandler\CommandHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
+
+        App\Shared\Application\QueryHandler\QueryHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
                 
     App\Shared\Infrastructure\EventListener\ExceptionEventListener:
         tags:

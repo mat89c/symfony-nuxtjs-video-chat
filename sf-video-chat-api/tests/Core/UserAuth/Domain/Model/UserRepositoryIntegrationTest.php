@@ -27,18 +27,6 @@ class UserRepositoryIntegrationTest extends KernelTestCase
         $this->entityManager = $kernel->getContainer()->get('doctrine.orm.entity_manager');
     }
 
-    public function test_it_can_write_and_read_user_to_db(): void
-    {
-        $uuid = Uuid::v4();
-        $user = UserService::getUserInstance(id: new UserId($uuid->toBinary()));
-        $this->userRepository->addUser($user);
-        $this->entityManager->flush();
-        
-        $userData = $this->userRepository->findById($uuid->toBinary());
-
-        $this->assertEquals($userData['id'], $uuid->toRfc4122());
-    }
-
     public function test_it_can_find_user_by_email(): void
     {
         $user = UserService::getUserInstance();
@@ -57,6 +45,17 @@ class UserRepositoryIntegrationTest extends KernelTestCase
         $this->entityManager->flush();
 
         $userData = $this->userRepository->findByUsername(username: $user->getUsername());
+
+        $this->assertEquals($user->getUsername(), $userData['username']);
+    }
+
+    public function test_it_can_find_user_by_id(): void
+    {
+        $user = UserService::getUserInstance();
+        $this->userRepository->addUser($user);
+        $this->entityManager->flush();
+
+        $userData = $this->userRepository->findById(id: $user->getId());
 
         $this->assertEquals($user->getUsername(), $userData['username']);
     }

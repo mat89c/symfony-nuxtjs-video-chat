@@ -8,7 +8,7 @@ interface UserRepositoryInterface
 {
     public function addUser(User $user): void;
 
-    public function findById(string $uuid): ?array;
+    public function findById(UserId $id): ?array;
 
     public function findByEmail(string $email): ?array;
 

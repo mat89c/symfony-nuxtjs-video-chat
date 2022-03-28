@@ -29,13 +29,17 @@ class UserUnitTest extends TestCase
 
     public function test_getters(): void
     {
+        $uuid = Uuid::v4()->toRfc4122();
         $email = 'usertest@example.com';
         $username = 'usernametest'; 
         $user = UserService::getUserInstance(
+            id: new UserId($uuid),
             email: $email,
             username: $username
         );
         
+        $this->assertInstanceOf(UserId::class, $user->getId());
+        $this->assertEquals($user->getIdAsString(), $uuid);
         $this->assertEquals($user->getEmail(), $email);
         $this->assertEquals($user->getUsername(), $username);
     }

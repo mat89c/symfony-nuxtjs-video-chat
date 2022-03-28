@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Core\UserAuth\Infrastructure\Validator\Symfony;
 
+use App\Core\UserAuth\Domain\Model\UserId;
 use App\Core\UserAuth\Infrastructure\Repository\DQL\UserRepository;
-use App\Core\UserAuth\Infrastructure\Validator\Symfony\UniqueValueInEntity;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueValueInEntityValidator extends ConstraintValidator
+class ValueNotExistsInEntityValidator extends ConstraintValidator
 {
     public function __construct(private UserRepository $userRepository) {}
 
@@ -24,15 +24,8 @@ class UniqueValueInEntityValidator extends ConstraintValidator
             return;
         }
 
-        if ($constraint->field === 'email') {
-            if ($this->userRepository->findByEmail(email: $value)) {
-                $this->context->buildViolation($constraint->message)
-                    ->addViolation();
-            }
-        }
-        
-        if ($constraint->field  === 'username') {
-            if ($this->userRepository->findByUsername(username: $value)) {
+        if ($constraint->field === 'id') {
+            if ($this->userRepository->findById(id: new UserId($value))) {
                 $this->context->buildViolation($constraint->message)
                     ->addViolation();
             }

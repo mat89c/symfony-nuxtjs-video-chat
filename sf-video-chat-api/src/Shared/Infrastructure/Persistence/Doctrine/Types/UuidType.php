@@ -7,7 +7,6 @@ namespace App\Shared\Infrastructure\Persistence\Doctrine\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Uid\Uuid;
-use App\Core\UserAuth\Domain\Model\UserId;
 
 class UuidType extends Type
 {
@@ -20,14 +19,13 @@ class UuidType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        return (string)$value;
+        $uuid = Uuid::fromString((string)$value);
+        return $uuid->toBinary();
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         $uuid = Uuid::fromBinary($value);
-        // return new UserId($uuid->toRfc4122());
-
         return $uuid->toRfc4122();
     }
 

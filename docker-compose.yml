@@ -35,6 +35,8 @@ services:
       - ./nuxt-video-chat-front/:/home/node/nuxt-video-chat-front
     ports:
       - 5000:5000
+    extra_hosts:
+      - api.video-chat.pl:172.17.0.1
 
   mariadb:
     container_name: sf_video_chat_mariadb
@@ -47,7 +49,6 @@ services:
         - 3307:3306
 
   adminer:
-      restart: always
       container_name: sf_video_chat_adminer
       image: adminer:4.8.1-standalone
       ports:

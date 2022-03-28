@@ -18,7 +18,7 @@ class UserService
         string $password = null): User
     {
         return new User(
-            id: $id ?? new UserId(Uuid::v4()->toBinary()),
+            id: $id ?? new UserId(Uuid::v4()->toRfc4122()),
             email: $email ?? 'user@example.com',
             username: $username ?? 'username',
             roles: $roles ?? ['ROLE_USER'],

@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Core\UserAuth\Application\RegisterUser\Command\RegisterUserCommand;
 
 /**
- * UnitTest
+ * @group UnitTest
  */
 class RegisterUserHandlerUnitTest extends KernelTestCase
 {

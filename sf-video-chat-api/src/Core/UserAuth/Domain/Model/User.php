@@ -21,6 +21,16 @@ class User
         $this->password = password_hash($password, PASSWORD_ARGON2I);
     }
 
+    public function getId(): UserId
+    {
+        return $this->id;
+    }
+
+    public function getIdAsString(): string
+    {
+        return $this->id->getUuid();
+    }
+
     public function getEmail(): string
     {
         return $this->email;

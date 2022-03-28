@@ -8,7 +8,9 @@ framework:
         #    App\Entity\: []
         mapping:
             paths:
+                #UserAccess
                 - '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Validator/Symfony/Mappings/RegisterUserCommand.yml'
+                - '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Validator/Symfony/Mappings/GetLoggedUserQuery.yml'
 
 when@test:
     framework:

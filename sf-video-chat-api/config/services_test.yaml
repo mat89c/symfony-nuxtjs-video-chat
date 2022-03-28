@@ -22,3 +22,6 @@ services:
 
     App\Core\UserAuth\Application\RegisterUser\CommandHandler\RegisterUserHandler:
         public: true
+
+    App\Core\UserAuth\Application\GetLoggedUser\QueryHandler\GetLoggedUserHandler:
+        public: true

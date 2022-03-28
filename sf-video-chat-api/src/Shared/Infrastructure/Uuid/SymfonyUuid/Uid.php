@@ -11,6 +11,6 @@ class Uid implements UuidInterface
 {
     public function generate(): string
     {
-        return Uuid::v4()->toBinary();
+        return Uuid::v4()->toRfc4122();
     }
 }

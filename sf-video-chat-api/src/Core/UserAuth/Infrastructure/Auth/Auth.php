@@ -10,11 +10,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Auth implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct(
+        private string $id,
         private string $email,
+        private string $username,
         private string $password,
         private array $roles
-    ) {
-        $this->password = password_hash($password, PASSWORD_ARGON2I);
+    ) {}
+    
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getEmail(): string
@@ -22,6 +27,11 @@ class Auth implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+    
     public function getPassword(): string
     {
         return (string)$this->password;
