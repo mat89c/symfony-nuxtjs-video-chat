@@ -1,4 +1,5 @@
 module.exports = {
+  preset: '@nuxt/test-utils',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
@@ -16,4 +17,9 @@ module.exports = {
     '<rootDir>/pages/**/*.vue',
   ],
   testEnvironment: 'jsdom',
+  globals: {
+    'ts-jest': {
+        isolatedModules: true
+    }
+  },
 }

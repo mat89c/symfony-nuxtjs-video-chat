@@ -13,9 +13,12 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@modules/*": ["./src/app/modules/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@ui/*": ["./src/ui/*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@types/jest", "@nuxtjs/auth-next"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
