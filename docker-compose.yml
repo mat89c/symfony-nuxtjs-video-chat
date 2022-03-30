@@ -5,6 +5,19 @@ services:
     build:
       context: ./docker/php/base
     image: php_base
+    networks:
+      - app-network
+
+  proxy:
+    container_name: proxy
+    image: proxy
+    build:
+      context: ./docker/proxy
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - app-network
 
   sf_video_chat_api:
     container_name: sf_video_chat_api
@@ -16,16 +29,19 @@ services:
       - ./sf-video-chat-api/:/var/www/html
     depends_on:
       - mariadb
-    ports:
-      - 8000:80
+    networks:
+      - app-network
 
   node_base:
     container_name: node_base
     build:
         context: ./docker/node/base
     image: node_base
+    networks:
+      - app-network
 
   nuxt_video_chat_front:
+    restart: always
     container_name: nuxt_video_chat_front
     image: nuxt_video_chat_front
     build:
@@ -33,10 +49,13 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./nuxt-video-chat-front/:/home/node/nuxt-video-chat-front
-    ports:
-      - 5000:5000
     extra_hosts:
       - api.video-chat.pl:172.17.0.1
+    networks:
+      - app-network
+    ports:
+      - 5000:5000
+      - 3000:3000
 
   mariadb:
     container_name: sf_video_chat_mariadb
@@ -46,13 +65,21 @@ services:
     volumes:
       - mariadb-database:/var/lib/mysql:rw
     ports:
-        - 3307:3306
+      - 3307:3306
+    networks:
+      - app-network
 
   adminer:
-      container_name: sf_video_chat_adminer
-      image: adminer:4.8.1-standalone
-      ports:
-          - 9000:8080
+    container_name: sf_video_chat_adminer
+    image: adminer:4.8.1-standalone
+    ports:
+      - 9000:8080
+    networks:
+      - app-network
 
 volumes:
-    mariadb-database:
+  mariadb-database:
+
+networks:
+  app-network:
+    driver: bridge

@@ -6,12 +6,7 @@
     >
       <v-spacer />
 
-      <v-btn
-        text
-        @click="onClickLogout" 
-      >
-        Wyloguj się
-      </v-btn>
+      <UserLogout />
     </v-app-bar>
 
     <v-main>
@@ -25,22 +20,18 @@
   </v-app>
 </template>
 
-<script lang="ts">
+<script> 
 import UserSession from '../../app/modules/userSession/ui/UserSession.vue'
 import Notification from '../../app/modules/notification/ui/NotificationBar.vue'
+import UserLogout from '../../app/modules/userLogin/ui/UserLogout.vue'
 
 export default {
   name: 'DefaultLayout',
   middleware: 'auth',
   components: {
     UserSession,
-    Notification
-  },
-  methods: {
-    onClickLogout() {
-      this.$auth.logout()
-      this.$router.push('/login')
-    }
+    Notification,
+    UserLogout
   }
 }
 </script>

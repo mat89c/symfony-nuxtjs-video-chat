@@ -30,6 +30,8 @@ import AuthInterface from '../../../../shared/infrastructure/auth/AuthInterface'
 import AuthService from '../../../../shared/infrastructure/auth/AuthService'
 import Router from '../../../../shared/infrastructure/router/Router'
 import RouterInterface from '../../../../shared/infrastructure/router/RouterInterface'
+import NuxtSocketIO from '../../../../shared/infrastructure/socket/NuxtSocketIO'
+import SocketInterface from '../../../../shared/infrastructure/socket/SocketInterface'
 import LoginUserCommand from '../application/loginUser/command/LoginUserCommand'
 import UserDataInterface from '../domain/UserDataInterface'
 import UserRepositoryInterface from '../domain/UserRepositoryInterface'
@@ -40,6 +42,7 @@ export default class UserLogin extends Vue {
   private auth: AuthInterface
   private router: RouterInterface
   private userRepository: UserRepositoryInterface
+  private socket: SocketInterface
   private userData: UserDataInterface = {
     email: '',
     password: '',
@@ -49,7 +52,8 @@ export default class UserLogin extends Vue {
     super()
     this.auth = new AuthService(this.$auth)
     this.router = new Router(this.$router)
-    this.userRepository = new UserRepository(this.auth, this.router)
+    this.socket = new NuxtSocketIO(this.$nuxtSocket({ name: 'chat', channel: '/', reconnection: false }))
+    this.userRepository = new UserRepository(this.auth)
   }
 
   public onSubmit(): void {
@@ -59,7 +63,9 @@ export default class UserLogin extends Vue {
 
     const loginUserCommand: CommandInterface = new LoginUserCommand(
       this.userRepository,
-      this.userData
+      this.userData,
+      this.socket,
+      this.router
     )
     loginUserCommand.execute()
   }

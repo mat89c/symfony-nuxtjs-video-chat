@@ -46,13 +46,24 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'nuxt-socket-io',
   ],
+
+  io: {
+    sockets: [
+      {
+        name: 'chat',
+        url: 'http://video-chat.pl',
+        default: true,
+      }
+    ]
+  },  
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://api.video-chat.pl',
+    baseURL: 'http://api.video-chat.pl',  
   },
 
   auth: {
@@ -126,6 +137,8 @@ export default {
       config.resolve.alias['@ui'] = joinSrc('ui')
     },
   },
+
+  serverMiddleware: ['~/server/index.js'],
 
   server: {
     host: '0.0.0.0',
