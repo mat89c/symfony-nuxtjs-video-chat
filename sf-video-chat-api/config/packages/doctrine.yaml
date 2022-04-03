@@ -1,6 +1,21 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+        default_connection: user
+        connections:
+            user:
+                # configure these for your database server
+                url: '%env(resolve:DATABASE_URL)%'
+                driver: 'pdo_mysql'
+                server_version: 'mariadb-10.7.3'
+                charset: utf8mb4
+            chat:
+                # configure these for your database server
+                url: '%env(resolve:DATABASE_CHAT_URL)%'
+                driver: 'pdo_mysql'
+                server_version: 'mariadb-10.7.3'
+                charset: utf8mb4
+
+        #url: '%env(resolve:DATABASE_URL)%'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
@@ -10,17 +25,42 @@ doctrine:
             uuid: App\Shared\Infrastructure\Persistence\Doctrine\Types\UuidType
         
     orm:
-        auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App\Core\UserAuth\Domain\Model:
-                is_bundle: false
-                type: yml
-                dir: '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Persistence/Doctrine/Mappings'
-                prefix: 'App\Core\UserAuth\Domain\Model'
-                alias: User
-                
+        default_entity_manager: user
+        entity_managers:
+            user:
+                connection: user
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    RefreshToken:
+                        type: xml
+                        prefix: 'Gesdinet\JWTRefreshTokenBundle\Entity'
+                        dir: '%kernel.project_dir%/vendor/gesdinet/jwt-refresh-token-bundle/Resources/config/doctrine'
+                        is_bundle: false
+                        alias: RefreshToken
+
+                    App\Core\UserAuth\Domain\Model:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Persistence/Doctrine/Mappings'
+                        prefix: 'App\Core\UserAuth\Domain\Model'
+                        alias: User
+            chat:
+                connection: chat
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    App\Core\Chat\Domain\Model\Chat:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/src/Core/Chat/Infrastructure/Persistence/Doctrine/Mappings/Chat'
+                        prefix: 'App\Core\Chat\Domain\Model'
+                        alias: Chat
+
+                    App\Core\Chat\Domain\Model\ChatMessage:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/src/Core/Chat/Infrastructure/Persistence/Doctrine/Mappings/ChatMessage'
+                        prefix: 'App\Core\Chat\Domain\Model\ChatMessage'
+                        alias: ChatMessage
 
 when@test:
     doctrine:

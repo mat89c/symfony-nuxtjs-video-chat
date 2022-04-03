@@ -10,7 +10,10 @@ framework:
             paths:
                 #UserAccess
                 - '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Validator/Symfony/Mappings/RegisterUserCommand.yml'
-                - '%kernel.project_dir%/src/Core/UserAuth/Infrastructure/Validator/Symfony/Mappings/GetLoggedUserQuery.yml'
+
+                #Chat
+                - '%kernel.project_dir%/src/Core/Chat/Infrastructure/Validator/Symfony/Mappings/FetchChatMessagesByIdQuery.yaml'
+                - '%kernel.project_dir%/src/Core/Chat/Infrastructure/Validator/Symfony/Mappings/AddMessageHandlerCommand.yaml'
 
 when@test:
     framework:

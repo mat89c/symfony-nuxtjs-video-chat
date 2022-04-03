@@ -1,8 +1,10 @@
 <template>
   <v-app dark>
-    <v-app-bar
+      <v-app-bar
       app
       dense
+      fixed
+      :clipped-left="true"
     >
       <v-spacer />
 
@@ -14,7 +16,7 @@
         <Nuxt />
 
         <UserSession />
-        <Notification />
+        <NotificationBar />
       </v-container>
     </v-main>
   </v-app>
@@ -22,16 +24,20 @@
 
 <script> 
 import UserSession from '../../app/modules/userSession/ui/UserSession.vue'
-import Notification from '../../app/modules/notification/ui/NotificationBar.vue'
+import NotificationBar from '../../app/modules/notification/ui/NotificationBar.vue'
 import UserLogout from '../../app/modules/userLogin/ui/UserLogout.vue'
+import ChatChannels from '../../app/modules/chat/ui/ChatChannels.vue'
+import ChatUsers from '../../app/modules/chat/ui/ChatUsers.vue'
 
 export default {
   name: 'DefaultLayout',
   middleware: 'auth',
   components: {
     UserSession,
-    Notification,
-    UserLogout
+    NotificationBar,
+    UserLogout,
+    ChatChannels,
+    ChatUsers
   }
 }
 </script>

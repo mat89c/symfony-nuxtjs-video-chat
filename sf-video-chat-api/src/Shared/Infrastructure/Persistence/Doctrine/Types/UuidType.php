@@ -31,7 +31,7 @@ class UuidType extends Type
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        return $platform->getJsonTypeDeclarationSQL($fieldDeclaration);
+        return $platform->getBinaryTypeDeclarationSQL($fieldDeclaration);
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform) : bool

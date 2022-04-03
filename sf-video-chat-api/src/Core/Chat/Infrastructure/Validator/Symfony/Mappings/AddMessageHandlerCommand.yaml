@@ -1,0 +1,11 @@
+App\Core\Chat\Application\AddMessage\Command\AddMessageCommand:
+  properties:
+    chatId:
+      - NotBlank:
+          message: chat.id.required
+      - App\Core\Chat\Infrastructure\Validator\Symfony\ValueNotExistsInEntity: 
+          message: chat.id.not_exists
+          field: chatId
+    message:
+      - NotBlank:
+          message: message.required

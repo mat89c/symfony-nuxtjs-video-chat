@@ -1,2 +1,5 @@
 user:
-  not_found: Nie znaleziono użytkownika  
+  not_found: Nie znaleziono użytkownika. 
+
+message:
+  required: Wymagany parametr message.

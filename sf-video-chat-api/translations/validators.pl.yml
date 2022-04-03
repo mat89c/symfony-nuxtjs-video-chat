@@ -119,3 +119,16 @@ password:
 userId:
   required: 'Wymagany id użytkownika.'
   not_exists: 'Nie znaleziono użytkownika o podanym ID.'
+
+chat:
+  id: 
+    required: 'Wymagany chat ID.'
+    not_exists: 'Nie znaleziono kanału o podanym ID.'
+
+author:
+  id:
+    reqired: 'Wymagany ID autora.'
+    not_exists: 'Autor o podanym ID nie istnieje.' 
+
+message:
+  required: 'Wymagana wiadomość.'

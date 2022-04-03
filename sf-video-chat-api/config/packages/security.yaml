@@ -6,7 +6,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users:
-            id: App\Core\UserAuth\Infrastructure\Auth\AuthProvider
+            id: App\Shared\Infrastructure\Auth\AuthProvider
 
     firewalls:
         api_token_refresh:

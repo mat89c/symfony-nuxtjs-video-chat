@@ -1,0 +1,13 @@
+App\Core\Chat\Domain\Model\Chat:
+  type: entity
+  table: chat
+  id:
+    id:
+      type: uuid
+      generator:
+        strategy: NONE
+  fields:
+    name:
+      type: string
+    chatType:
+      type: string

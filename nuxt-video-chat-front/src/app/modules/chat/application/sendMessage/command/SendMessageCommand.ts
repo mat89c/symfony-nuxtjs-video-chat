@@ -13,7 +13,9 @@ export default class SendMessageCommand implements CommandInterface {
     }
 
     public execute(): void {
+        this.message.chatId = this.chatRepository.getCurrentChatChannelId()
         const chatMessage = new ChatMessage(this.message)
         this.chatRepository.addMessage(chatMessage)
+        this.message.content = ''
     }
 }

@@ -22,8 +22,8 @@ class UserSessionStore implements Module<UserSessionStateInterface, RootStateInt
     }
 
     public actions: ActionTree<UserSessionStateInterface, RootStateInterface> = {
-        showPopupTimerElement({ commit }, userSession: UserSession): void {
-            commit('SHOW_POPUP_TIMER_ELEMENT', userSession)
+        setTimeToLogout({ commit }, userSession: UserSession): void {
+            commit('SET_TIME_TO_LOGOUT', userSession)
         },
 
         setPopupTimerElementVisibility({ commit }, userSession: UserSession): void {

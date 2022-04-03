@@ -1,13 +1,24 @@
 <template>
   <div>
     <v-row class="pt-5">
-      <v-col cols="9">
+      <v-col cols="3">
+        <ChatChannels 
+          @scrollChat="scrollChat"
+          @showInfiniteScroll="showInfiniteScroll"
+        />
+      </v-col>
+
+      <v-col cols="6">
         <v-card elevation="2">
           <v-card-text id="chat-content" class="d-block chat-window">
+            <ChatMessagesInfiniteScroll 
+              v-if="infiniteScroll"
+            />
+            
             <div
               v-for="(message, index) in messages"
               :key="index"
-              class="chat-row"
+              class="chat-row mt-4"
             >
               <div class="d-flex mb-3">
                 <v-avatar color="indigo" size="36" class="mr-2">
@@ -63,6 +74,7 @@ import Component from 'vue-class-component';
 import ChatRepository from '../infrastructure/repository/ChatRepository'
 import ChatRepositoryInterface from '../domain/ChatRepositoryInterface'
 import SendMessageCommand from '../application/sendMessage/command/SendMessageCommand'
+import AppendMessageToChatCommand from '../application/appendeMessageToChat/command/AppendMessageToChatCommand'
 import CommandInterface from '../../../../shared/application/command/CommandInterface'
 import GetMessagesQuery from '../application/getMessages/query/GetMessagesQuery'
 import QueryInterface from '../../../../shared/application/query/QueryInterface'
@@ -70,28 +82,42 @@ import ChatMessageDataInterface from '../domain/ChatMessageDataInterface';
 import ChatMessage from '../domain/ChatMessage';
 import NuxtSocketIO from '../../../../shared/infrastructure/socket/NuxtSocketIO'
 import SocketInterface from '../../../../shared/infrastructure/socket/SocketInterface'
+import AxiosService from '../../../../shared/infrastructure/http/AxiosService'
+import HttpInterface from '../../../../shared/infrastructure/http/HttpInterface'
+import ChatChannels from './ChatChannels.vue'
+import ChatMessagesInfiniteScroll from './ChatMessagesInfiniteScroll.vue'
 
-@Component
+@Component({
+  components: {
+    ChatChannels,
+    ChatMessagesInfiniteScroll
+  }
+})
 export default class Chat extends Vue {
   private chatRepository: ChatRepositoryInterface
+  private http: HttpInterface
+  private socket: SocketInterface
   private message: ChatMessageDataInterface = {
+    chatId: '',
     authorName: this.$auth!.user!.username as string,
-    content: ''
+    content: '',
+    createdAt: null
   }
+  private infiniteScroll: boolean = false
 
   private users = []
-  private socket: SocketInterface
 
   constructor() {
     super()
-    this.chatRepository = new ChatRepository(this.$store)
+    this.http = new AxiosService(this.$axios)
     this.socket = new NuxtSocketIO(this.$nuxtSocket({ name: 'chat', channel: '/', reconnection: false })) 
+    this.chatRepository = new ChatRepository(this.$store, this.socket, this.http) 
   }
 
   public mounted() {
     this.socket.on('send-message', (message: ChatMessageDataInterface) => {
-      const sendMessageCommand: CommandInterface = new SendMessageCommand(this.chatRepository, message)
-      sendMessageCommand.execute()
+      const appendMessageToChatCommand: CommandInterface = new AppendMessageToChatCommand(this.chatRepository, message)
+      appendMessageToChatCommand.execute()
 
       this.scrollChat()
     })
@@ -106,17 +132,18 @@ export default class Chat extends Vue {
     const sendMessageCommand: CommandInterface = new SendMessageCommand(this.chatRepository, this.message)
     sendMessageCommand.execute()
     
-    this.socket.emit('send-message', this.message)
-    this.message.content = ''
-
     this.scrollChat()
   }
 
-  public scrollChat() {
+  public scrollChat(): void {
     setTimeout(() => {
       const chatContent: HTMLDivElement = this.$el.querySelector('#chat-content') as HTMLDivElement
       chatContent.scrollTop = chatContent.scrollHeight
     }, 50)
+  }
+
+  public showInfiniteScroll(): void {
+    this.infiniteScroll = true
   }
 }
 </script>

@@ -11,6 +11,7 @@ use App\Core\UserAuth\Domain\Model\UserRepositoryInterface;
 use App\Shared\Application\CommandHandler\CommandHandlerInterface;
 use App\Shared\Application\Exception\ExceptionInterface;
 use App\Shared\Application\Validation\ValidationInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class RegisterUserHandler implements CommandHandlerInterface
 {
@@ -19,12 +20,13 @@ final class RegisterUserHandler implements CommandHandlerInterface
         private UserFactory $userFactory,
         private ValidationInterface $validator,
         private ExceptionInterface $exception,
-        private UserRepositoryInterface $userRepository
+        private UserRepositoryInterface $userRepository,
+        private EntityManagerInterface $userEntityManager
     ) {}    
 
     public function __invoke(RegisterUserCommand $registerUserCommand): void
     {
-        $errors = $this->validator->validate(command: $registerUserCommand);
+        $errors = $this->validator->validate($registerUserCommand);
         
         if (count($errors) > 0) {
             $this->exception->throw($errors[0]->getMessage(), 400);
@@ -45,5 +47,7 @@ final class RegisterUserHandler implements CommandHandlerInterface
         );
 
         $this->userRepository->addUser($user);
+
+        $this->userEntityManager->flush();
     }
 }

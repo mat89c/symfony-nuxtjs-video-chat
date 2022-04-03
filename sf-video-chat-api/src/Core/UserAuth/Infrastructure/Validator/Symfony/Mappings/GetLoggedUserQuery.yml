@@ -1,8 +1,0 @@
-App\Core\UserAuth\Application\GetLoggedUser\Query\GetLoggedUserQuery:
-    properties:
-        userId:
-          - NotBlank:
-              message: userId.required
-          - App\Core\UserAuth\Infrastructure\Validator\Symfony\UniqueValueInEntity: 
-              message: userId.not_exists
-              field: id

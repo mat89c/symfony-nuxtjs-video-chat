@@ -47,6 +47,20 @@ const axiosPlugin: Plugin = ({
 
                     showNotificationCommand.execute()
                 }
+
+                if (typeof error.response !== 'undefined' && error.response.data.message !== 'undefined' && error.response.status === 400) {
+                    const showNotificationCommand: CommandInterface =
+                        new SetNotificationCommand(
+                        {
+                            message: error.response.data.message,
+                            visibility: true,
+                            bgColor: 'red'
+                        },
+                        notificationRepository
+                    )
+
+                    showNotificationCommand.execute()
+                }
     
                 return await Promise.reject(error)
             }

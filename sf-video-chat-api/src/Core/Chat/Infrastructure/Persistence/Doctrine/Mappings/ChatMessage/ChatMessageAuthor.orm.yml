@@ -1,0 +1,7 @@
+App\Core\Chat\Domain\Model\ChatMessage\ChatMessageAuthor:
+  type: embeddable
+  fields:
+    id:
+      type: uuid
+    name:
+      type: string

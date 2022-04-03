@@ -7,7 +7,6 @@ use Doctrine\Persistence\ObjectManager;
 use App\Core\UserAuth\Domain\Factory\UserUuidFactory;
 use App\Core\UserAuth\Domain\Model\User;
 use App\Core\UserAuth\Domain\Model\UuidInterface;
-use Symfony\Component\Uid\Uuid;
 
 class UserAuthFixtures extends Fixture
 {

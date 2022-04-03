@@ -11,7 +11,7 @@ export default class UserSession {
         const timestampNow: number = +new Date()
         const diff: number = tokenExpiration - timestampNow
         const time: number = diff / 1000
-
+       
         this.timeToLogout = time
     }
 

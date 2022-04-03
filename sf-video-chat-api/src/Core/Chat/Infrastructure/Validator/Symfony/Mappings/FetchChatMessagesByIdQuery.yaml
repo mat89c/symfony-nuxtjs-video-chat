@@ -1,0 +1,8 @@
+App\Core\Chat\FetchChatMessagesById\Query\FetchChatMessagesByIdQuery:
+    properties:
+        chatId:
+          - NotBlank:
+              message: chat.id.required
+          - App\Core\Chat\Infrastructure\Validator\Symfony\ValueNotExistsInEntity: 
+              message: chat.id.not_exists
+              field: chatId

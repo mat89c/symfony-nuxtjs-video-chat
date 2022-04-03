@@ -24,4 +24,8 @@ export default class UserSessionRepository implements UserSessionRepositoryInter
     public getTimeToLogout(): number {
         return this.store.getters['userSessionStore/getTimeToLogout']
     } 
+
+    public clearInterval(interval: NodeJS.Timeout): void {
+        clearInterval(interval)
+    }
 }

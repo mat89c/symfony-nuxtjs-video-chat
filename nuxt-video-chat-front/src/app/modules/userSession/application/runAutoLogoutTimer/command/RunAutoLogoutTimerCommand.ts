@@ -17,11 +17,12 @@ export default class RunAutoLogoutTimerCommand implements CommandInterface {
 
     public execute(): void {
         const userSession: UserSession = new UserSession()
-
-        setInterval(() => {
+        
+        const logoutTimer: NodeJS.Timeout =  setInterval(() => {
             const tokenExpiration: number = this.auth.getTokenExpiration()
             userSession.calculateAutoLogoutTime(tokenExpiration)
             if (this.auth.isTokenExpired()) {
+                this.userSessionRepository.clearInterval(logoutTimer)
                 this.auth.logout()
                 this.router.push('/login')
             }

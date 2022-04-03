@@ -1,0 +1,18 @@
+App\Core\Chat\Domain\Model\ChatMessage\ChatMessage:
+  type: entity
+  table: chat_message
+  id:
+    id:
+      type: uuid
+      generator:
+        strategy: NONE
+  fields:
+    chatId:
+      type: uuid
+    content:
+      type: text
+    createdAt:
+      type: datetime_immutable
+  embedded:
+    author:
+      class: App\Core\Chat\Domain\Model\ChatMessage\ChatMessageAuthor

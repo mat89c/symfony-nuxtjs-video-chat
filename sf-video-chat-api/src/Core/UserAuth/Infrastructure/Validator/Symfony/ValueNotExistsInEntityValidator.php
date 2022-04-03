@@ -8,7 +8,6 @@ use App\Core\UserAuth\Domain\Model\UserId;
 use App\Core\UserAuth\Infrastructure\Repository\DQL\UserRepository;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ValueNotExistsInEntityValidator extends ConstraintValidator
 {
@@ -16,10 +15,6 @@ class ValueNotExistsInEntityValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof UniqueValueInEntity) {
-            throw new UnexpectedTypeException($constraint, UniqueValueInEntity::class);
-        }
-
         if (null === $value || '' === $value) {
             return;
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\UserAuth\Infrastructure\Auth;
+namespace App\Shared\Infrastructure\Auth;
 
 use App\Core\UserAuth\Domain\Model\UserRepositoryInterface;
 use App\Shared\Infrastructure\Exception\ApiException;

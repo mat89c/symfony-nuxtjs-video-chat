@@ -53,9 +53,6 @@ services:
       - api.video-chat.pl:172.17.0.1
     networks:
       - app-network
-    ports:
-      - 5000:5000
-      - 3000:3000
 
   mariadb:
     container_name: sf_video_chat_mariadb

@@ -79,7 +79,7 @@ export default {
         },
         token: {
           property: 'token',
-          maxAge: 600
+          maxAge: 600   
         },
         refreshToken: {
           property: 'refresh_token',
